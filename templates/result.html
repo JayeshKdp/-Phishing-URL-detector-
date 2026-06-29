@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Scan Result | PhishGuard ML{% endblock %}
+{% block content %}
+<section class="container result-layout">
+    <div class="result-card risk-{{ risk_color }}">
+        <div class="result-topline">
+            <span class="eyebrow">Scan complete</span>
+            <span class="risk-badge">{{ risk_label }}</span>
+        </div>
+        <h1>{{ prediction }}</h1>
+        <p class="scanned-url">{{ url }}</p>
+        <div class="confidence-grid">
+            <div>
+                <span>Confidence</span>
+                <strong>{{ confidence }}%</strong>
+            </div>
+            <div>
+                <span>Safe probability</span>
+                <strong>{{ safe_probability }}%</strong>
+            </div>
+            <div>
+                <span>Phishing probability</span>
+                <strong>{{ phishing_probability }}%</strong>
+            </div>
+        </div>
+        <div class="risk-meter" aria-label="Confidence meter">
+            <span style="width: {{ confidence }}%"></span>
+        </div>
+        <a class="btn btn-outline-light" href="{{ url_for('home') }}">Scan another URL</a>
+    </div>
+
+    <div class="feature-card">
+        <div class="section-heading">
+            <span class="eyebrow">Extracted signals</span>
+            {% if model_accuracy %}<span>Model accuracy {{ model_accuracy }}%</span>{% endif %}
+        </div>
+        <div class="table-responsive">
+            <table class="table feature-table">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for name, value in features.items() %}
+                        <tr>
+                            <td>{{ name.replace("_", " ").title() }}</td>
+                            <td>{{ value }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+{% endblock %}

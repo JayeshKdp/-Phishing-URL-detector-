@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Not Found | PhishGuard ML{% endblock %}
+{% block content %}
+<section class="container content-page">
+    <span class="eyebrow">404</span>
+    <h1>Page not found.</h1>
+    <p>The route you requested does not exist.</p>
+    <a class="btn btn-primary" href="{{ url_for('home') }}">Return home</a>
+</section>
+{% endblock %}

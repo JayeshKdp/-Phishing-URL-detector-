@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Home | PhishGuard ML{% endblock %}
+{% block content %}
+<section class="hero-section">
+    <div class="container hero-grid">
+        <div class="hero-copy">
+            <span class="eyebrow">Offline URL intelligence</span>
+            <h1>Detect phishing links before they reach the click.</h1>
+            <p>Scan a URL with a locally trained Random Forest model and inspect the exact signals used in the prediction.</p>
+            <div class="status-row">
+                <span class="status-pill">No external APIs</span>
+                <span class="status-pill">Local model.pkl</span>
+                {% if model_accuracy %}
+                    <span class="status-pill">Training accuracy {{ model_accuracy }}%</span>
+                {% endif %}
+            </div>
+        </div>
+        <div class="scan-panel">
+            <div class="panel-header">
+                <span class="panel-dot"></span>
+                <span>Threat Console</span>
+            </div>
+            <form id="scanForm" action="{{ url_for('home') }}" method="post" novalidate>
+                <label for="url" class="form-label">URL to analyze</label>
+                <div class="input-group scan-input">
+                    <span class="input-group-text">URL</span>
+                    <input class="form-control" id="url" name="url" type="url" placeholder="https://example.com/login" maxlength="2048" required>
+                </div>
+                <div class="invalid-feedback" id="urlError">Enter a valid URL, for example https://example.com.</div>
+                <button class="btn btn-primary scan-button" type="submit">
+                    <span class="button-icon">SCAN</span>
+                    Analyze URL
+                </button>
+                <div class="loading-bar" id="loadingBar" aria-hidden="true">
+                    <span></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="container metrics-strip">
+    <div>
+        <strong>12</strong>
+        <span>URL features</span>
+    </div>
+    <div>
+        <strong>RF</strong>
+        <span>Random Forest</span>
+    </div>
+    <div>
+        <strong>0</strong>
+        <span>API calls</span>
+    </div>
+</section>
+{% endblock %}
