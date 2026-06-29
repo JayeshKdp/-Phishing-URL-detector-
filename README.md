@@ -1,75 +1,117 @@
-# 🛡️ Phishing URL Detector
+# PhishGuard ML - Offline Phishing URL Detector
 
-A Machine Learning-based web application that detects whether a URL is **Safe** or **Phishing**.
+PhishGuard ML is a Flask web application that predicts whether a URL is safe or phishing using a locally trained Scikit-learn Random Forest model. It does not use external phishing detection APIs or paid services.
 
 ## Features
 
-- Detect phishing URLs
-- Machine Learning prediction
-- Clean web interface
-- Fast response
-- Deployed on Render
-
-## Technologies Used
-
-- Python
-- Flask
-- Scikit-Learn
-- HTML
-- CSS
-- JavaScript
-- Render
-- GitHub
-
-## Installation
-
-```bash
-git clone https://github.com/USERNAME/phishing-url-detector.git
-
-cd phishing-url-detector
-
-pip install -r requirements.txt
-
-python app.py
-```
-
-Visit:
-
-```
-http://127.0.0.1:5000
-```
-
-## Deployment
-
-Hosted on Render.
+- Flask routing for Home, About, How It Works, Contact, and scan results
+- Local CSV dataset in `dataset/phishing.csv`
+- URL feature extraction in `feature_extraction.py`
+- Random Forest training script in `train_model.py`
+- Saved local model artifact: `model.pkl`
+- Confidence score, risk level, and feature table
+- Dark cybersecurity UI with responsive Bootstrap 5-compatible local assets
+- JavaScript form validation and loading animation
+- Render-friendly project structure
 
 ## Project Structure
 
+```text
+project/
+├── app.py
+├── requirements.txt
+├── model.pkl
+├── train_model.py
+├── feature_extraction.py
+├── dataset/
+│   └── phishing.csv
+├── templates/
+│   ├── base.html
+│   ├── index.html
+│   ├── about.html
+│   ├── how.html
+│   ├── result.html
+│   ├── contact.html
+│   ├── 404.html
+│   └── 500.html
+├── static/
+│   ├── css/
+│   ├── js/
+│   └── images/
+└── README.md
 ```
-app.py
-requirements.txt
-templates/
-static/
-model/
-dataset/
+
+## Installation
+
+1. Open a terminal in the `project` folder.
+
+2. Create and activate a virtual environment.
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
 ```
 
-## Machine Learning Model
+On macOS or Linux:
 
-- Logistic Regression
-- Random Forest
-- Decision Tree
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
 
-(Use whichever model you trained.)
+3. Install dependencies.
 
-## Screenshots
+```bash
+pip install -r requirements.txt
+```
 
-(Add screenshots here.)
+4. Train the local model.
 
-## Author
+```bash
+python train_model.py
+```
 
-Your Name
+The script loads `dataset/phishing.csv`, extracts URL features, trains a Random Forest classifier, prints accuracy in the terminal, and saves `model.pkl`.
 
-## License
+5. Run the Flask app.
 
-MIT License
+```bash
+python app.py
+```
+
+6. Visit:
+
+```text
+http://127.0.0.1:5000
+```
+
+## Render Deployment
+
+Use these settings on Render:
+
+- Build command: `pip install -r requirements.txt`
+- Start command: `gunicorn app:app`
+
+For Render, add `gunicorn` to `requirements.txt` if you deploy with Gunicorn:
+
+```text
+gunicorn==22.0.0
+```
+
+Run `python train_model.py` locally before deployment so `model.pkl` is included with the project.
+
+## Dataset Format
+
+The CSV must contain:
+
+```csv
+url,label
+https://example.com,safe
+http://verify-account-example.com/login,phishing
+```
+
+Accepted labels are `safe` and `phishing`.
+
+## Important Note
+
+This is a portfolio and educational project. Real-world phishing defense should combine multiple signals, continuous dataset updates, user reporting, domain reputation, sandboxing, and security monitoring.
