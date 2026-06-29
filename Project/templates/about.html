@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}About | PhishGuard ML{% endblock %}
+{% block content %}
+<section class="container content-page">
+    <span class="eyebrow">About</span>
+    <h1>Portfolio-ready phishing detection, fully local.</h1>
+    <p>PhishGuard ML is a Flask web app that classifies URLs with a Scikit-learn Random Forest model trained from a local CSV dataset. It does not call any third-party phishing detection API, which makes it suitable for offline demonstrations and privacy-conscious deployments.</p>
+    <div class="info-grid">
+        <article>
+            <h2>Local-first</h2>
+            <p>The model artifact is loaded from <code>model.pkl</code> when Flask starts, and every prediction is generated on the server from extracted URL features.</p>
+        </article>
+        <article>
+            <h2>Explainable signals</h2>
+            <p>Each scan shows the URL length, symbols, HTTPS status, IP-address usage, subdomain count, suspicious keyword count, slashes, and query-parameter presence.</p>
+        </article>
+        <article>
+            <h2>Deployable</h2>
+            <p>The project uses common Python dependencies, environment-variable friendly Flask conventions, and a file layout that is straightforward to deploy on Render.</p>
+        </article>
+    </div>
+</section>
+{% endblock %}
